@@ -1,3 +1,4 @@
+// Method 1-O(n) using BFS
 void level_order_traversal(struct Node *root,unordered_map<int,int> &mp){
     queue <struct Node*> q;
     q.push(root);
@@ -27,4 +28,27 @@ int kthAncestor(Node *root, int k, int x){
             break;
     }
     return x;
+}
+// Method 2-Using Backtracking
+bool kth(struct Node *root,int x,vector <int> &vec){
+     if (root==NULL) 
+        return false; 
+        
+     vec.push_back(root->data);
+     
+     if(root->data==x)
+        return true;
+        
+     if(kth(root->left,x,vec) || kth(root->right,x,vec))
+        return true;
+     vec.pop_back();
+     return false;
+}
+int kthAncestor(Node *root, int k, int node){
+    vector <int> vec;
+    kth(root,node,vec);
+    if(k>vec.size()-1 || k<=0)
+        return -1;
+    int idx=vec.size()-1-k;
+    return vec[idx];
 }
