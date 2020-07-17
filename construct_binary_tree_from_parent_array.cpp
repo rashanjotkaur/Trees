@@ -36,19 +36,19 @@ Node *createTree(int parent[], int n){
 
 // Method 2
 Node *createTree(int parent[], int n){
-    unordered_map <int,struct Node*> ump;
+    vector <struct Node*> vec;
     for(int i=0;i<n;i++){
         struct Node *temp=new Node(i);
-        ump[i]=temp;
+        vec.push_back(temp);
     }
     int root;
     for(int i=0;i<n;i++){
         if(parent[i]==-1)
             root=i;
-        if(parent[i]!=-1 && ump[parent[i]]->left==NULL)
-            ump[parent[i]]->left=ump[i];
-        else if(parent[i]!=-1 && ump[parent[i]]->right==NULL)
-            ump[parent[i]]->right=ump[i];
+        if(parent[i]!=-1 && vec[parent[i]]->left==NULL)
+            vec[parent[i]]->left=vec[i];
+        else if(parent[i]!=-1 && vec[parent[i]]->right==NULL)
+            vec[parent[i]]->right=vec[i];
     }
-    return ump[root];
+    return vec[root];
 }
