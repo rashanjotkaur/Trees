@@ -1,3 +1,4 @@
+// Method 1-Level Order Traversal
 #include<bits/stdc++.h>
     typedef pair<struct TreeNode*,struct TreeNode*> pi;
     bool isCousins(TreeNode* root, int x, int y) {
@@ -43,4 +44,34 @@
         if(p1.second->val!=p2.second->val && l1==l2)
             return true;
         return false;
+    }
+// Method 2-using traversal
+TreeNode* x_par;
+    TreeNode* y_par;
+    int x_level, y_level;
+    void check(TreeNode* root,int x,int y,int level,TreeNode* par){
+        if (root==NULL) 
+            return;
+        if (x == root->val){
+            x_par = par;
+            x_level = level;
+        }
+        if (y == root->val){
+            y_par = par;
+            y_level = level;
+        }
+        check(root->left, x, y, level+1, root);
+        check(root->right, x, y, level+1, root);
+    }
+    bool isCousins(TreeNode* root, int x, int y) {
+        if (x == y || root==NULL) 
+            return false;
+        x_level = y_level = 0;
+        x_par = y_par = NULL;
+        check(root, x, y, 0, NULL);        
+        if (x_par == y_par) 
+            return false;
+        if (x_level != y_level) 
+            return false;
+        return true;
     }
